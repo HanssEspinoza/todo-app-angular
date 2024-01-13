@@ -1,0 +1,23 @@
+<h1>Signals</h1>
+<p>Hola soy {{ name() }}</p>
+<p>Mi edad es de {{ age() }} años</p>
+<p>Mis colores favoritos son:</p>
+<ul>
+  @for(color of favoriteColors(); track color) {
+    <li>{{color}}</li>
+  } @empty {
+    <p>No Hay Colores</p>
+  }
+</ul>
+
+<input type="text" [value]="name()" (change)="changeHandler($event)">
+<input type="number" [value]="age()" (change)="changeHandler2($event)">
+
+<button (click)="addColors()">Agregar listado de colores</button>
+
+<h1>Numero: {{ num() }}</h1>
+<h1>Numero x 3: {{ num3() }}</h1>
+
+<button (click)="count()">Contador</button>
+
+<h1>{{ lastName() }}</h1>
