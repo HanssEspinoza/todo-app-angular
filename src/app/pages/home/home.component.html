@@ -8,17 +8,18 @@
         placeholder="Type new todo"
         autofocus
         type="text"
-        (change)="changeHandler($event)"
+        [formControl]="newTaskCtrl"
+        (keydown.enter)="changeHandler()"
       />
     </div>
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
-    <pre>
+    <!-- <pre>
       <code>
         {{ tasksService.tasks() | json }}
       </code>
-    </pre>
+    </pre> -->
     <section class="main">
       <ul class="todo-list">
         @for(task of tasksService.tasks(); track task; let idx = $index) {
@@ -68,8 +69,8 @@
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count">
-        <strong>{{ tasks().length }}</strong>
-         @if(tasks().length === 1) {
+        <strong>{{ tasksService.tasks().length }}</strong>
+         @if(tasksService.tasks().length === 1) {
           item
          } @else() {
           items
@@ -81,10 +82,10 @@
         <li>
           <a routerLink="/" class="selected">All</a>
         </li>
-        <li>
+        <li style="color: green">
           <a routerLink="/pending">Pending</a>
         </li>
-        <li>
+        <li [style.color]="color()">
           <a routerLink="/completed">Completed</a>
         </li>
       </ul>
