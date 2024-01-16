@@ -16,12 +16,12 @@
     <!-- This section should be hidden by default and shown when there are todos -->
     <pre>
       <code>
-        {{ tasks() | json }}
+        {{ tasksService.tasks() | json }}
       </code>
     </pre>
     <section class="main">
       <ul class="todo-list">
-        @for(task of tasks(); track task; let idx = $index) {
+        @for(task of tasksService.tasks(); track task; let idx = $index) {
         <li>
           <div class="view">
             <input

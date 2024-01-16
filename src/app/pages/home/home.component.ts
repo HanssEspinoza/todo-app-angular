@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 
 import { Task } from '../../models/task.model';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,9 @@ import { Task } from '../../models/task.model';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+  tasksService = inject(TaskService);
+
   tasks = signal<Task[]>([
     {
       id: Date.now(),
@@ -42,31 +46,14 @@ export class HomeComponent {
   }
 
   addTask(title: string): void {
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      completed: false
-    }
-
-    this.tasks.update((task) => [...task, newTask]);
+    this.tasksService.createTask(title);
   }
 
   deleteTask(index: number): void {
-    this.tasks.update((tasks) => tasks.filter((task, position) => position !== index))
+    this.tasksService.deleteTask(index);
   }
 
   updateTask(index: number): void {
-    this.tasks.update((tasks) => {
-      return tasks.map((task, position) => {
-        if (position === index) {
-          return {
-            ...task,
-            completed: !task.completed
-          }
-        }
-
-        return task;
-      })
-    })
+    this.tasksService.updateTask(index);
   }
 }
