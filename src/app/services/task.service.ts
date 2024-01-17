@@ -32,6 +32,23 @@ export class TaskService {
   // Signal para el mundo
   tasks = computed(() => this.#_tasks());
 
+  filter = signal<'all' | 'pending' | 'completed'>('all');
+
+  taskByFilter = computed(() => {
+    const filter = this.filter();
+    const tasks = this.#_tasks();
+
+    if(filter === 'pending') {
+      return tasks.filter((task) => !task.completed)
+    }
+
+    if(filter === 'completed') {
+      return tasks.filter((task) => task.completed)
+    }
+
+    return tasks;
+  })
+
   createTask(title: string): void {
     const newTask: Task = {
       id: Date.now(),

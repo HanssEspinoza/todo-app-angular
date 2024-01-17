@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -58,5 +57,9 @@ export class HomeComponent {
 
   updateTitle(index: number, event: Event): void {
     this.tasksService.updateTaskTitle(index, event);
+  }
+
+  changeFilter(filter: 'all' | 'pending' | 'completed') {
+    this.tasksService.filter.set(filter);
   }
 }
