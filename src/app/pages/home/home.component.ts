@@ -51,4 +51,12 @@ export class HomeComponent {
     this.tasksService.updateTask(index);
     this.color.set('#8E44AD');
   }
+
+  updateTaskEditingMode(index: number): void {
+    this.tasksService.editionModeActivate(index);
+  }
+
+  updateTitle(index: number, event: Event): void {
+    this.tasksService.updateTaskTitle(index, event);
+  }
 }

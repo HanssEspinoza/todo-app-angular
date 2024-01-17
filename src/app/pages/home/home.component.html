@@ -23,7 +23,11 @@
     <section class="main">
       <ul class="todo-list">
         @for(task of tasksService.tasks(); track task; let idx = $index) {
-        <li>
+        <li
+          (dblclick)="updateTaskEditingMode(idx)"
+          [class.completed]="task.completed"
+          [class.editing]="task.editing"
+        >
           <div class="view">
             <input
               class="toggle"
@@ -34,7 +38,11 @@
             <label>{{ task.title }}</label>
             <button (click)="deleteTask(idx)" class="destroy"></button>
           </div>
-          <input class="edit" value="Buy a unicorn" />
+          <input
+            class="edit"
+            (keydown.enter)="updateTitle(idx, $event)"
+            [value]="task.title"
+          />
         </li>
         }
         <!--
@@ -70,12 +78,7 @@
       <!-- This should be `0 items left` by default -->
       <span class="todo-count">
         <strong>{{ tasksService.tasks().length }}</strong>
-         @if(tasksService.tasks().length === 1) {
-          item
-         } @else() {
-          items
-         }
-         left
+        @if(tasksService.tasks().length === 1) { item } @else() { items } left
       </span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">

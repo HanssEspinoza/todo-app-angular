@@ -62,4 +62,40 @@ export class TaskService {
       })
     })
   }
+
+  editionModeActivate(index: number): void {
+    this.#_tasks.update((tasks) => {
+      return tasks.map((task, position) => {
+        if (position === index) {
+          return {
+            ...task,
+            editing: true
+          }
+        }
+
+        return {
+          ...task,
+          editing: false,
+        };
+      })
+    })
+  }
+
+  updateTaskTitle(index: number, event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    this.#_tasks.update((tasks) => {
+      return tasks.map((task, position) => {
+        if (position === index) {
+          return {
+            ...task,
+            title: input.value,
+            editing: false,
+          }
+        }
+
+        return task;
+      })
+    })
+  }
 }
