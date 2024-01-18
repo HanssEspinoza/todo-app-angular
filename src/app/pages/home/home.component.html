@@ -73,27 +73,29 @@
         -->
       </ul>
     </section>
-    <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer class="footer">
-      <!-- This should be `0 items left` by default -->
-      <span class="todo-count">
-        <strong>{{ tasksService.taskByFilter().length }}</strong>
-        @if(tasksService.tasks().length === 1) { item } @else() { items } left
-      </span>
-      <!-- Remove this if you don't implement routing -->
-      <ul class="filters">
-        <li>
-          <a (click)="changeFilter('all')" routerLink="/" [class.selected]="tasksService.filter() === 'all'">All</a>
-        </li>
-        <li style="color: green">
-          <a (click)="changeFilter('pending')" routerLink="/pending" [class.selected]="tasksService.filter() === 'pending'">Pending</a>
-        </li>
-        <li [style.color]="color()">
-          <a (click)="changeFilter('completed')" routerLink="/completed" [class.selected]="tasksService.filter() === 'completed'">Completed</a>
-        </li>
-      </ul>
-      <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
-    </footer>
+    @if(tasksService.taskByFilter().length > 0) {
+      <!-- This footer should be hidden by default and shown when there are todos -->
+      <footer class="footer">
+        <!-- This should be `0 items left` by default -->
+        <span class="todo-count">
+          <strong>{{ tasksService.taskByFilter().length }}</strong>
+          @if(tasksService.tasks().length === 1) { item } @else() { items } left
+        </span>
+        <!-- Remove this if you don't implement routing -->
+        <ul class="filters">
+          <li>
+            <a (click)="changeFilter('all')" routerLink="/" [class.selected]="tasksService.filter() === 'all'">All</a>
+          </li>
+          <li style="color: green">
+            <a (click)="changeFilter('pending')" routerLink="/pending" [class.selected]="tasksService.filter() === 'pending'">Pending</a>
+          </li>
+          <li [style.color]="color()">
+            <a (click)="changeFilter('completed')" routerLink="/completed" [class.selected]="tasksService.filter() === 'completed'">Completed</a>
+          </li>
+        </ul>
+        <!-- Hidden if no completed items are left ↓ -->
+        <button class="clear-completed">Clear completed</button>
+      </footer>
+    }
   </div>
 </section>

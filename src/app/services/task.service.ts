@@ -7,28 +7,8 @@ import { Task } from '../models/task.model';
 })
 export class TaskService {
   // Signal privada
-  #_tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Instalar Angular CLI',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear Proyecto con ng new',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear componente con ng g c',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear servicio con ng g s',
-      completed: false,
-    },
-  ]);
+  #_tasks = signal<Task[]>([]);
+
   // Signal para el mundo
   tasks = computed(() => this.#_tasks());
 
@@ -48,6 +28,10 @@ export class TaskService {
 
     return tasks;
   })
+
+  inicialStateSignal(tasks: Task[]): void {
+    this.#_tasks.set(tasks);
+  }
 
   createTask(title: string): void {
     const newTask: Task = {
